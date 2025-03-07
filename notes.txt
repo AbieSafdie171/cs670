@@ -1,0 +1,155 @@
+The effect of human-caused climate change on phytoplankton biodiversity is not well understood. Should greenhouse gas emissions continue rising to high levels by 2100, some phytoplankton models predict an increase in species richness, or the number of different species within a given area. This increase in plankton diversity is traced to warming ocean temperatures. In addition to species richness changes, the locations where phytoplankton are distributed are expected to shift towards the Earth's poles. Such movement may disrupt ecosystems, because phytoplankton are consumed by zooplankton, which in turn sustain fisheries. This shift in phytoplankton location may also diminish the ability of phytoplankton to store carbon that was emitted by human activities. Human (anthropogenic) changes to phytoplankton impact both natural and economic processes.[85]
+
+
+
+Things to do:
+
+- visualize change in ocean temperatures across the different cast sites
+
+	- group all data by specific location
+	- then see the change in temperature by approx. location
+
+  - just view overall change in temperature? ---> this creates baseline that temperatures are rising and that leads me to be able to answer
+    other questions... like what happens to phytoplankton levels if temperature is 3 degree C higher than average (can use a model to predict this!)
+
+
+
+
+- use this baseline to then measure the change in chlorophyll (phytoplankton) concentration/quantity
+- 
+
+
+Boosted trees?
+
+
+
+
+---
+
+### **1. Metadata & Identifiers**
+- **Cast Count (Cst_Cnt), Bottle Count (Btl_Cnt), Station ID (Sta_ID)** → Identifiers for tracking where and when data was collected.
+- **Depth (Depthm, Depth_ID, R_Depth)** → The depth (in meters) at which the measurement was taken.
+
+---
+
+### **2. Temperature & Salinity**
+- **Temperature (T_degC, R_TEMP, R_POTEMP)** → The temperature of the seawater, which affects ocean currents, marine life, and chemical processes.
+- **Salinity (Salnty, R_SALINITY)** → The concentration of dissolved salts in seawater, which influences density and ocean circulation.
+- **Sigma-Theta (STheta, R_SIGMA)** → A measure of **seawater density**, calculated from temperature and salinity.
+- **R_SVA (Specific Volume Anomaly)** → A measure of how much seawater volume deviates from a reference state, linked to density and buoyancy.
+- **R_DYNHT (Dynamic Height Anomaly)** → Represents **ocean circulation patterns**, based on variations in temperature and salinity.
+
+---
+
+### **3. Oxygen & Saturation**
+- **Oxygen Concentration (O2ml_L, Oxy_µmol.Kg, R_O2)** → The amount of dissolved oxygen in seawater, critical for marine life respiration.
+- **Oxygen Saturation (O2Sat, R_O2Sat)** → The percentage of oxygen relative to the maximum it can hold at a given temperature & salinity.  
+  - *Higher values* → Oxygen-rich water, often due to photosynthesis or atmospheric exchange.  
+  - *Lower values* → Can indicate **hypoxia (oxygen deficiency)**, harmful to marine life.
+
+---
+
+### **4. Nutrients (Key for Marine Life & Algae Growth)**
+- **Phosphate (PO4uM, R_PO4)** → Essential for phytoplankton growth and part of the **ocean’s nutrient cycle**.
+- **Silicate (SiO3uM, R_SIO3)** → Important for **diatoms** (a type of phytoplankton that builds silica shells).
+- **Nitrite (NO2uM, R_NO2) & Nitrate (NO3uM, R_NO3)** → Forms of nitrogen used by phytoplankton for growth.
+- **Ammonium (NH3uM, R_NH4)** → Another nitrogen source for algae, usually from **organic matter decomposition**.
+
+*Nutrient levels influence algal blooms, ecosystem productivity, and ocean chemistry.*
+
+---
+
+### **5. Chlorophyll & Phaeopigments (Phytoplankton Biomass Indicators)**
+- **Chlorophyll-a (ChlorA, R_CHLA)** → Measures the amount of **phytoplankton**, the base of the oceanic food web.  
+  - *Higher values* → More phytoplankton, possibly an algal bloom.  
+  - *Lower values* → Oligotrophic (low-nutrient) conditions.
+- **Phaeopigments (Phaeop, R_PHAEO)** → Degraded chlorophyll, indicating **old or decomposing phytoplankton**.
+
+---
+
+### **6. Primary Productivity (How Much Carbon is Fixed by Algae)**
+- **C14As1, C14As2 (Carbon-14 Assimilation)** → Measures **how much CO₂ is absorbed by phytoplankton** for photosynthesis.  
+  - A **higher rate** means a more productive ecosystem.
+- **DarkAs (Dark Bottle Productivity)** → Used in **incubation experiments** to estimate how much respiration occurs in the absence of light.
+- **MeanAs (Mean Assimilation Productivity)** → The average **primary productivity rate**.
+
+---
+
+### **7. Water Column Light & Incubation Data**
+- **LightP (Light Penetration)** → How much sunlight reaches different depths, crucial for **photosynthesis**.
+- **IncTim (Incubation Time)** → Time period for **productivity experiments**, where scientists measure how much carbon phytoplankton fix.
+
+---
+
+### **8. Carbon Chemistry & pH**
+- **DIC1, DIC2 (Dissolved Inorganic Carbon)** → The amount of carbon available in the ocean for **photosynthesis and ocean acidification processes**.
+- **TA1, TA2 (Total Alkalinity)** → Indicates how well seawater can **buffer changes in pH**, important for marine organisms like corals.
+- **pH1, pH2** → Measures **ocean acidity**, which affects **coral reefs, shell-building organisms, and overall marine chemistry**.
+
+---
+
+### **9. Quality Flags & Precision Data**
+- **T_qual, S_qual, O_qual, etc.** → Indicate if a measurement is reliable or flagged for potential issues.
+- **DIC.Quality.Comment** → Notes on the **quality of dissolved inorganic carbon data**.
+
+
+
+ChlorA - chlorphyll
+
+
+model_quad <- lm(ChlorA ~ poly(T_degC, 2, raw = TRUE), data = ch_df)
+
+# View model summary
+summary(model_quad)
+
+ggplot(ch_df, aes(x = T_degC, y = ChlorA)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), color = "red", se = TRUE) +
+  labs(title = "Chlorophyll vs Temperature (Quadratic Fit)",
+       x = "Temperature (°C)",
+       y = "Chlorophyll Level") +
+  theme_minimal()
+
+
+  ggplot(ch_df, aes(x = T_degC, y = ChlorA)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 4), color = "red", se = TRUE) +
+  labs(title = "Chlorophyll vs Temperature (Quartic Fit)",
+       x = "Temperature (°C)",
+       y = "Chlorophyll Level") +
+  theme_minimal()
+
+
+
+ggplot(ch_f, aes(x = T_degC, y = log_Chlorophyll)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), color = "red", se = TRUE) +
+  labs(title = "Log(Chlorophyll) vs Temperature (Quadratic Fit)",
+       x = "Temperature (°C)",
+       y = "Log(Chlorophyll Level)") +
+  theme_minimal()
+
+
+
+
+start_params <- list(
+  a = max(ch_df$ChlorA, na.rm = TRUE),
+  b = ch_df$T_degC[which.max(ch_df$ChlorA)],
+  c = sd(ch_df$T_degC, na.rm = TRUE) / 2  # Rough estimate
+)
+
+
+
+ggplot(ch_df, aes(x = T_degC, y = log_ChlorA)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_line(aes(y = predicted), color = "red", size = 1.2) +
+  labs(title = "Log(Chlorophyll) vs Temperature (Gaussian Fit)",
+       x = "Temperature (°C)",
+       y = "Log(Chlorophyll Level)") +
+  theme_minimal()
+
+
+
+
+
+

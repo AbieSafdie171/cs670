@@ -1,0 +1,36 @@
+- Define the COFI dataset and what it tracks ---> coastal ecosystem data and their health
+	- locations of data, depth, etc...
+	- show plot locations
+
+- Describe the problem --> rising sea level temperatures... what effect does that have on the health of these ecosystems
+	- cite nasa data stating ocean temperatures are rising
+	- JUST SHOW THE NASA DATA BC ITS PROBABLY OK TO DO THIS BC IT JUST SETS UP THE PREMISE OF WHAT I AM TRYING TO SHOW/PREDICT
+
+- Express the critical importance of phytoplankton
+	- keystone species
+	- 30-50 percent of all carbon emitted by humans is aborbed by plankton
+		- largest carbon sink in the world
+		- it is of CRITICAL importance that this carbon sink remains functional for the overall health of the planet
+
+	- QUESTIONS TO ANSWER:
+		- How does the amount of plankton change with temperature... Is there a relationship? 
+			- how does this influence oxygen saturation...
+				- im expecting: 
+					- oxygen rich = high chlorophyll (plankton)
+					- hypxic = low chlorohpyll (plankton)
+
+		- How does the level of nutirents change w temperature...
+		- Look at C14As1, C14As2 (amount of carbon absorbed by phtoplankton) relation to temperature
+		- MeanAs (The average primary productivity rate)
+		- pH1, pH2 (ocean aciditity, which affects coral reefs, shell-building organisms, and overall marine chemistry.)
+		- DIC1, DIC2 (Dissolved Inorganic Carbon) → The amount of carbon available in the ocean for photosynthesis and ocean acidification processes.
+
+
+
+- Models I can use to answer the questions/make predictions
+	- Linear Regression for plankton values based on tempearutes
+		- experiment w/ lasso, ridge regularization		<--- probably use ridge bc there is multicollinearity
+		- polynomial regression/multiple linear regression
+		- CROSS-VALIDATION
+			- confustion matrices ex to mesasure performance
+	- Boosted Trees (apparently better for non-linear relationships)
