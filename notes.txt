@@ -1,6 +1,57 @@
 The effect of human-caused climate change on phytoplankton biodiversity is not well understood. Should greenhouse gas emissions continue rising to high levels by 2100, some phytoplankton models predict an increase in species richness, or the number of different species within a given area. This increase in plankton diversity is traced to warming ocean temperatures. In addition to species richness changes, the locations where phytoplankton are distributed are expected to shift towards the Earth's poles. Such movement may disrupt ecosystems, because phytoplankton are consumed by zooplankton, which in turn sustain fisheries. This shift in phytoplankton location may also diminish the ability of phytoplankton to store carbon that was emitted by human activities. Human (anthropogenic) changes to phytoplankton impact both natural and economic processes.[85]
 
 
+TEMP - PLANKTON
+
+> plot(bottle_data_with_years$T_degC, bottle_data_with_years$ChlorA, 
++      type="p",
++      pch=19,
++      col="blue", 
++      ylim=c(0, 40),
++      xlim=c(0, 27),
++      main="Scatter Plot of Chlorphyll vs Temperature",
++      xlab="Temperature (Celsius)",
++      ylab="Chlorphyll Levels")
+
+
+OXYGEN - PLANKTON
+
+> plot(bottle_data_with_years$ChlorA, bottle_data_with_years$O2Sat, 
++      type="p",
++      pch=19,
++      xlim=c(0,25),
++      col="yellow", 
++      main="Scatter Plot of Oxygen Saturation vs Plankton",
++      xlab="Plankton",
++      ylab="Oxygen Saturation")
+
+
+PRODUCTIVITY - PLANKTON
+
+> plot(bottle_data_with_years$ChlorA, bottle_data_with_years$MeanAs, 
++      type="p",
++      pch=19,
++      xlim=c(0,25),
++      ylim=c(0, 400),
++      col="orange", 
++      main="Scatter Plot of Primary Productivity Rate vs Plankton",
++      xlab="Plankton",
++      ylab="Primary Productivity Rate")
+
+
+CARBON - PLANKTON
+
+> plot(bottle_data_with_years$ChlorA, bottle_data_with_years$C14As1, 
++      type="p",
++      pch=19,
++      xlim=c(0,25),
++      ylim=c(0, 400),
++      col="gray", 
++      main="Scatter Plot of Carbon Absorbtion vs Plankton",
++      xlab="Plankton",
++      ylab="Carbon Absorbtion")
+
+
 
 Things to do:
 

@@ -37,10 +37,37 @@ As a result, this project intends to answer a few questions regarding the relati
 More specifically these are: 
 	- How does the amount of plankton change with respect to temperature?
 		- How does this then impact oxygen and nutrient levels?
+		- Can we form a model that can accurately predict plankton levels?
 	- How does the level of nutrients change with temperature?
 	- How does the primary productivity rate change with plankton and temperature levels?
 
-I hypothesize that with an increase in ocean temperature, the amount of plankton will decrease and the amount of productivity and nutrients in an ecosystem will also decline.
+Further, I hypothesize that with an increase in ocean temperature, the amount of plankton will decrease and the amount of productivity and nutrients in an ecosystem will also decline.
+
+
+## Visualizations
+
+Given the questions I am attempting to answer, below are several important visualizations that provide insightful context on the CalCOFI dataset. 
+
+First, I plotted plankton levels with respect to ocean temperautre. Notably, there is an interseting, Gaussian-like relationship with plankton and temperature.
+
+[comment]: <insert TEMP-PLANKTON> (graph)
+
+Given this, it invites the need to explore how increasing temperatures might influence the amount of phytoplankton.
+
+Second, I plotted various productivity and nutrients in relation to phytoplankton
+
+[comment]: <insert CARBON - PLANKTON> (graph)
+[comment]: <insert PRODUCTIVITY - PLANKTON> (graph)
+[comment]: <insert OXYGEN - PLANKTON> (graph)
+
+
+
+
+## Models
+
+I fit multiple linear regression models and boosted trees...
+	- cross-validation
+	- ridge regression bc of multicollinearity
 
 
 
