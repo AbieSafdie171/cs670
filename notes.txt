@@ -51,6 +51,70 @@ CARBON - PLANKTON
 +      xlab="Plankton",
 +      ylab="Carbon Absorbtion")
 
+TEMP - PHOSPHATE
+
+> plot(bottle_data_with_years$T_degC, bottle_data_with_years$PO4uM, 
++      type="p",
++      pch=19,
++      col="orange", 
++      ylim=c(0, 6),
++      xlim=c(0, 32),
++      main="Scatter Plot of Phosphate vs Temperature",
++      xlab="Temperature (Celsius)",
++      ylab="Phosphate Levels (micromoles / liter)")
+
+
+PLANKTON - PHOSPHATE
+
+> plot(bottle_data_with_years$ChlorA, bottle_data_with_years$PO4uM, 
++      type="p",
++      pch=19,
++      col="purple", 
++      ylim=c(0, 4),
++      xlim=c(0, 25),
++      main="Scatter Plot of Phosphate vs Chlorophyll",
++      xlab="Chlorophyll (micrograms / liter)",
++      ylab="Phosphate Levels (micromoles / liter)")
+
+
+AVERAGE NUTRIENT CONCENTRATIONS
+
+> average_data <- bottle_data_with_years %>%
++     group_by(T_degC) %>%
++     summarise(
++         avg_phosphate = mean(PO4uM, na.rm = TRUE),
++         avg_nitrite = mean(NO2uM, na.rm = TRUE),
++         avg_chlorophyll_A = mean(ChlorA, na.rm = TRUE)
++     )
+> long_data <- average_data %>%
++     pivot_longer(cols = -T_degC, names_to = "Variable", values_to = "Value")
+> ggplot(long_data, aes(x = T_degC, y = Value, color = Variable)) +
++     geom_line() +
++     labs(title = "Average Concentrations by Temperature",
++          x = "Temperature",
++          y = "Average Value") +
++     theme_minimal()
+
+AVERAGE PRODUCTIVITY CONCENTRATIONS
+
+> average_data <- bottle_data_with_years %>%
++     group_by(T_degC) %>%
++     summarise(
++         avg_c14As1 = mean(c14As1, na.rm = TRUE),
++         avg_MeanAS = mean(MeanAS, na.rm = TRUE),
+          avg_oxygen = mean(O2Sat, na.rm = TRUE),
++         avg_chlorophyll_A = mean(ChlorA, na.rm = TRUE)
++     )
+> long_data <- average_data %>%
++     pivot_longer(cols = -T_degC, names_to = "Variable", values_to = "Value")
+> ggplot(long_data, aes(x = T_degC, y = Value, color = Variable)) +
++     geom_line() +
++     labs(title = "Average Concentrations by Temperature",
++          x = "Temperature",
++          y = "Average Value") +
++     theme_minimal()
+
+
 
 
 Things to do:

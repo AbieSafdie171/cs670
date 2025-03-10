@@ -54,11 +54,13 @@ First, I plotted plankton levels with respect to ocean temperautre. Notably, the
 
 Given this, it invites the need to explore how increasing temperatures might influence the amount of phytoplankton.
 
-Second, I plotted various productivity and nutrients in relation to phytoplankton
+Second, I plotted various productivity and nutrients in relation to phytoplankton and temperature
 
 [comment]: <insert CARBON - PLANKTON> (graph)
 [comment]: <insert PRODUCTIVITY - PLANKTON> (graph)
 [comment]: <insert OXYGEN - PLANKTON> (graph)
+[comment]: <insert Temperature - Phosphate> (graph)
+[comment]: <insert Plankton - Phosphate> (graph)
 
 
 
