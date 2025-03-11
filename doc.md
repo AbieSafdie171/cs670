@@ -5,7 +5,7 @@
 
 [comment]: <d> (You must provide background on the dataset or datasets you worked with, such as who created it, why, how it was collected, for what purpose it was collected, what attributes are included, what representation decisions were made and how that affects the data, etc.)
 
-The CalCOFI (California Cooperative Oceanic Fisheries Investigations) dataset tracks oceanic data off the coast of California. It is jointly managed by NOAA’s Fisheries Service, the California Department of Fish & Wildlife, and various academic institutions.
+The CalCOFI (California Cooperative Oceanic Fisheries Investigations) dataset tracks oceanic data off the coast of California. It is jointly managed by NOAA’s Fisheries Service, the California Department of Fish & Wildlife, and various academic institutions. (https://calcofi.org/data/oceanographic-data/bottle-database/)
 
 The data is retrieved via bottle samples dropped at various depths at different oceanic locations. These samples retrieve data on many different indicators of ocean health. For example, CO2 measurements, pH levels, nutrient densities (e.g. phostphate, nitrite, ammonium, etc), ocean temperatures, oxygen saturations, and plankton levels. 
 
@@ -86,23 +86,22 @@ With regards to productivity, it can be seen that these metrics mirror chlorophy
 
 ## Models
 
-I fit multiple linear regression models and boosted trees...
+I fit multiple linear regression models
 	- cross-validation
 	- ridge regression bc of multicollinearity
 
+I fit boosted trees...?
+	- simple boosted trees etc.
 
 
 
+## Analysis and discussion
+
+Draw what conclusions you can and observe what remains inconclusive. Explain the evidence.
 
 
+## Impact
 
-
-
-
-
-
-
-
-
+Explain the likely impact your methods could have if adopted widely.
 
 
