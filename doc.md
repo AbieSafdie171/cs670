@@ -30,7 +30,7 @@ According to NASA, the ocean's are warming at an unprecedented rate due to human
 
 This increase in ocean tempereature raises the question as to what effect this will have on the health of the ocean and its ecosystems. 
 
-Accordingly, the CalCOFI dataset tracks one of the most important indicators of ocean health: Chlorophyll-A levels. Chlorophyll-A is the pigment associated with phytoplankton, which is a keystone species and primary producer in marine ecosystems. On top of being a keystone species in local ecosystems, plankton absorb roughly 30-50 percent of all carbon emitted by humans, making them the largest carbon sink in the world. Therefore, it is of critical importance that plankton levels remain within a healthy range for marine ecosystems to be healthy.
+Accordingly, the CalCOFI dataset tracks one of the most important indicators of ocean health: Chlorophyll-A levels. Chlorophyll-A is the pigment associated with phytoplankton, which is a keystone species and primary producer in marine ecosystems. On top of being a keystone species in local ecosystems, plankton absorb roughly 30-50 percent of all carbon emitted by humans, making them the largest carbon sink in the world. Therefore, it is of critical importance that plankton levels remain within a healthy range for marine -- and land-based -- ecosystems to be healthy.
 
 As a result, this project intends to answer a few questions regarding the relationship between ocean temperature, plankton levels, and other nutrients. 
 
@@ -48,21 +48,40 @@ Further, I hypothesize that with an increase in ocean temperature, the amount of
 
 Given the questions I am attempting to answer, below are several important visualizations that provide insightful context on the CalCOFI dataset. 
 
-First, I plotted plankton levels with respect to ocean temperautre. Notably, there is an interseting, Gaussian-like relationship with plankton and temperature.
+First, I plotted plankton levels with respect to ocean temperautre.
 
-[comment]: <insert TEMP-PLANKTON> (graph)
+[comment]: <insert TEMP-PLANKTON> (plankton_temperature.png)
 
-Given this, it invites the need to explore how increasing temperatures might influence the amount of phytoplankton.
+Notably, there is an interseting, Gaussian-like relationship with plankton and temperature. Given this, it invites the need to explore how increasing temperatures might influence the amount of phytoplankton. 
 
-Second, I plotted various productivity and nutrients in relation to phytoplankton and temperature
+Second, I plotted various productivity and nutrients in relation to phytoplankton and temperature.
 
-[comment]: <insert CARBON - PLANKTON> (graph)
-[comment]: <insert PRODUCTIVITY - PLANKTON> (graph)
-[comment]: <insert OXYGEN - PLANKTON> (graph)
-[comment]: <insert Temperature - Phosphate> (graph)
-[comment]: <insert Plankton - Phosphate> (graph)
+[comment]: <insert PRODUCTIVITY - PLANKTON> (productivity_plankton.png)
+
+One of the most important indicators of the health of an ecosystem is its producutivity. Producutivity is measured in how much carbon gets absorbed by the environment. As seen in the above plot, plankton are needed to reach a productivity of above 50 mg of Carbon per cubic meter per half light day. After a certain threshold, however, it seems the more plankton does not neccassrily correlate to a more productive ecosystem. I added a linear regression line to this plot to illustrate a broad interpretation of this relationship.
 
 
+[comment]: <insert OXYGEN - PLANKTON> (oxygen_plankton.png)
+
+Due to plankton being primary producers (they conduct photosynthesis and release oxygen), there is a notable trend with how much oxygen is in the water in relation to the amount of plankton. Oxygen, of course, is necessary for all marine life that conduct cellular respiration. Without enough oxygen in the water, a marine ecosystem can become hypoxic (lack of oxygen) and cause massive die-offs. In this plot, we can the importance plankton play in oxygen levels in an ecosystem.
+
+[comment]: <insert Temperature - Phosphate> (temp-phosphate.png)
+[comment]: <insert Plankton - Phosphate> (phosphate-chlorophyll.png)
+
+Phosphate is a key nutrient that is needed for plankton growth. Therefore, we can see a unique trend where phosphate levels decline as plankton increase. This is due to the plankton absorbing the phosphate and using it for growth. Accordingly with temperature, phosphate also sees this general trend. 
+
+
+[comment]: <insert AVERAGE NUTRIENT CONCENTRATIONS> (avg-concentrations.png)
+
+Zooming out, I conducted an average of plankton levels and all key nutrients against ocean temperature. In this plot we can see how these nutrients interact with each other against temperature. Notably, we can see the phosphate-plankton trend more clearly -- as plankton begin to increase, we can see phosphate decline. Further, we can see the similar normal-like distribution of chorophyll across temperature. Nitrite and Ammonium are other forms of nitrogen that plankton use for growth. However, something interesting is occuring with those values. Below is a plot with chlorphyll removed, so we can more easily see ammonium and nitrite. Notably, they mirror chlorophyll levels. This is because these nutrients get recycled more quickly as there are more plankton in the water. This is because zooplankton -- and other organisms that eat phytoplankton -- release ammonium as a byproduct. Therefore, there is rapid recycling of these nitogrens when plankton levels are high.
+
+[comment]: <insert AVERAGE NUTRIENT CONCENTRATIONS> (avg-NOCHLOR.png)
+
+
+[comment]: <insert AVERAGE PRODUCTIVITY CONCENTRATIONS> (avg-productivity.png)
+
+
+With regards to productivity, it can be seen that these metrics mirror chlorophyll levels. That is, carbon absorbtion (C14AS1) and average carbon absorbtion (MeanAS). Further, we can see that oxygen saturation climbs significantly when chlorophyll increases.
 
 
 ## Models
