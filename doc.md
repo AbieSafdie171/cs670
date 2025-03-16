@@ -3,8 +3,6 @@
 
 ## The CalCOFI Dataset
 
-[comment]: <d> (You must provide background on the dataset or datasets you worked with, such as who created it, why, how it was collected, for what purpose it was collected, what attributes are included, what representation decisions were made and how that affects the data, etc.)
-
 The CalCOFI (California Cooperative Oceanic Fisheries Investigations) dataset tracks oceanic data off the coast of California. It is jointly managed by NOAA’s Fisheries Service, the California Department of Fish & Wildlife, and various academic institutions. (https://calcofi.org/data/oceanographic-data/bottle-database/)
 
 The data is retrieved via bottle samples dropped at various depths at different oceanic locations. These samples retrieve data on many different indicators of ocean health. For example, CO2 measurements, pH levels, nutrient densities (e.g. phostphate, nitrite, ammonium, etc), ocean temperatures, oxygen saturations, and plankton levels. 
@@ -15,13 +13,9 @@ Currently, CalCOFI is still collecting and publishing data, however, the data I 
 
 Below is a visual (all visualizations were created by me using R, unless stated otherwise) of the locations off the coast of California where data samples were taken. 
 
-[comment]: <insert locations graph> (This is a comment, it will not be included)
+[comment]: <insert locations graph> ()
 
 ## Questions
-
-[comment]: <insert visual> (You must clearly state the questions you’re attempting to answer. Some questions could be a bit vague or broad, such as determining the basic properties of the different attributes, but others should be more specific, such as determining if a particular relationship exists.
-)
-
 
 According to NASA, the ocean's are warming at an unprecedented rate due to human-caused greenhouse gas emissions. Notably, about 90 percent of global warming is occuring in the ocean. (cite: https://climate.nasa.gov/vital-signs/ocean-warming/?intent=121)
 
@@ -36,7 +30,7 @@ As a result, this project intends to answer a few questions regarding the relati
 
 More specifically these are: 
 	- How does the amount of plankton change with respect to temperature?
-		- How does this then impact oxygen and nutrient levels?
+		- How does this impact oxygen and nutrient levels?
 		- Can we form a model that can accurately predict plankton levels?
 	- How does the level of nutrients change with temperature?
 	- How does the primary productivity rate change with plankton and temperature levels?
@@ -58,12 +52,12 @@ Second, I plotted various productivity and nutrients in relation to phytoplankto
 
 [comment]: <insert PRODUCTIVITY - PLANKTON> (productivity_plankton.png)
 
-One of the most important indicators of the health of an ecosystem is its producutivity. Producutivity is measured in how much carbon gets absorbed by the environment. As seen in the above plot, plankton are needed to reach a productivity of above 50 mg of Carbon per cubic meter per half light day. After a certain threshold, however, it seems the more plankton does not neccassrily correlate to a more productive ecosystem. I added a linear regression line to this plot to illustrate a broad interpretation of this relationship.
+One of the most important indicators of the health of an ecosystem is its producutivity. Producutivity is measured in how much carbon gets absorbed by the environment. As seen in the above plot, existence of plankton is needed to reach a productivity of above 50 mg of Carbon per cubic meter per half light day. This plot contains a linear regression line that illustrate a broad overview of this relationship between plankton and productivity.
 
 
 [comment]: <insert OXYGEN - PLANKTON> (oxygen_plankton.png)
 
-Due to plankton being primary producers (they conduct photosynthesis and release oxygen), there is a notable trend with how much oxygen is in the water in relation to the amount of plankton. Oxygen, of course, is necessary for all marine life that conduct cellular respiration. Without enough oxygen in the water, a marine ecosystem can become hypoxic (lack of oxygen) and cause massive die-offs. In this plot, we can the importance plankton play in oxygen levels in an ecosystem.
+Due to plankton being primary producers (they conduct photosynthesis and release oxygen), there is a notable trend with how much oxygen is in the water in relation to the amount of plankton. Oxygen, of course, is necessary for all marine life that conduct cellular respiration. Without enough oxygen in the water, a marine ecosystem can become hypoxic (lack of oxygen) and cause massive die-offs. In this plot, we can see the importance plankton play in oxygen levels in an ecosystem.
 
 [comment]: <insert Temperature - Phosphate> (temp-phosphate.png)
 [comment]: <insert Plankton - Phosphate> (phosphate-chlorophyll.png)
@@ -86,22 +80,79 @@ With regards to productivity, it can be seen that these metrics mirror chlorophy
 
 ## Models
 
-I fit multiple linear regression models
-	- cross-validation
-	- ridge regression bc of multicollinearity
+To find what types of models to attempt to fit to this dataset I tried various methods.
 
-I fit boosted trees...?
-	- simple boosted trees etc.
+To begin, I examined which predictors presented statistical significance in predicting chlorophyll levels.
 
+[comment]: <insert NUTRIENTS MODEL > (nutrients_model.png)
+
+I did this process of fitting basic linear models across different predictors to see what constituted statistical significance. Further, I used my visualizations to determine what predictors I believed were necessary to include to maximize my models' performance, while staying lightweight.
+
+As a result of this process, I decided to include T_degC, 02ml_L, Р04uМ, SiOuM, NO2uM in my model.
+
+Further, I noted that there seemed to be significant multicollinearity associated with the predictors. I discovered this via my visualizations and by general data analysis (i.e. playing around and looking at the dataset).
+
+As a result, I decided that I should attempt to fit a mulitple linear regression model using ridge regression as a regularization technique. 
+
+I used the glmnet R package to accomplish this. Further, I used the caret package to perform cross-validation. See the attached code snippets. 
+
+[comment]: < RIDGE CODE> (ridge.R)
+
+I conducted cross-validation with 10 folds and found that a lambda value of 0.0119 gave the best performance. Below is a graph of the cross-validation model using glmnet that shows the performance across different lamdba vlaues.
+
+[comment]: < LAMDBA GRAPH> (ridge_lambda.png)
+
+
+I proceeded to fit the ridge regression model and found the following coeficcients: 
+
+[comment]: < RIDGE COEFF> (ridge_coeff.png)
+
+Finally, to analyze the model's performance I calculated MSE and R-Squared values. I found that my model had an MSE of 0.02 and an R-Squared value of 0.41. 
+
+I attempted to improve upon these metrics by adding more predictors and changing certain predictors with squared and cubic terms, but found no significant improvement.
+
+
+Secondly, I decided to use boosted trees to predict Chlorophyll. I used the xgboost R library to do this. 
+
+[comment]: <TREE CODE> ()
+
+
+I used set-validation as my validation technique and trained the boosted tree model over 100 epochs with a tree depth of 6.
+
+
+Using boosted trees returned better performance than my ridge regression model. This was seen via the boosted trees MSE value of 0.0164 and an R-Squared value of 0.659. 
 
 
 ## Analysis and discussion
 
-Draw what conclusions you can and observe what remains inconclusive. Explain the evidence.
+
+An ocean's ecosystem has extremely complex, interweaving relationships that can make it very difficult to accurately model. Further, there are exterior factors, such as human-released chemicals and severe weather events that can disturb an ecosystem. As a result, to find patterns or insights from the data can be challenging. However, the visualizations and models produced do provide some interesting insights into the CalCOFI dataset. 
+
+For one, how predictors change with respect to environmental factors. Ammonium, for instance, gets rapidly recycled when plankton levels are high, and therefore we can see that it mirrors chlorophyll levels fairly closely. This level of interaction can be seen across many other predictors and was discussed in the visualization section. 
+
+On another note, the extreme interaction between predictors resulted in noticeable multicollinearity among variables. This is evident in the ridge regression model, which produced a lambda value of 0.0119. Furthermore, this lambda value -— determined through cross-validation -- optimally balances the bias-variance tradeoff for this dataset. Overall, this highlights the intricate and interwoven relationships that exist in ocean ecosystems.
+
+Another key observation that can be made from the data is how plankton influence productivity levels. This is perhaps one of the most significant findings. Previously, it was mentioned how plankton are a keystone species, meaning without the functions they perform for an ecosystem, that ecosystem has a high chance of collapse. This potential threat of collapse can be seen in the produced visualizations and models. Most notably, in figure x (production_plankton.png). Ultimately, this observation is extremely significant because with minimal plankton levels come severe environmental consequences due to the minimizing of carbon absorption. 
+
+Additionally, the influence temperature has on plankton levels is significant. From figure x (plankton_temperature.png), a Gaussian-like relationship can be seen between temperature and plankton. This relationship is significant as it visualizes the potential influence warming temperuatures caused by human-related greenhouse gas emissions will have on plankton populations. Further, rising temperatures cause a change in ocean stratification, which is the separation of water into distinct layers based on temperature and density. Consequently, as stratification changes, specific nutrients, such as phosphate and nitrogens, present in each layer will change. Plankton, which reside almost solely on the ocean's surface layer, are influenced by this stratification. Notably, this phenomena can be seen in the aforementioned figure x and explains the decline in plankton populations as temperatures increase. 
+
+All together, warming temperatures can disrupt the ecological processes that exist and could have drastic ramifications on the entire planet. Importantly, the models and visualizations I produced warn of these potential catastrophic problems and their ensuing consequences. That is, as ocean temperatures continue to rise, ocean stratification will become more pronounced, leading to a decline in nutrient levels and plankton populations. Consequently, fewer plankton will result in a less productive ecosystem and reduced oxygen levels. Furthermore, with fewer plankton to absorb carbon, more greenhouse gases will remain in the atmosphere, causing further warming, which will, in turn, lead to further plankton population decline, reducing carbon absorption even more. This creates a devastating positive feedback loop for the environment. On top of all this, ocean ecosystems could develop hypoxic (low-oxygen) zones, which could lead to massive die-offs of marine life that threaten ocean ecosystems even more and cause damage to the world's fishing economies.
+
+
+Ultimately, by analyzing my visualizations and models, I can conclude that my previoulsy stated hypothesis shows a strong indication of being valid. However, more data needs to be collected and various shortcomings of the CalCOFI dataset need to be addressed.
+
+
+The shortcomings of the CalCOFI dataset include the following: First, it is unclear what types of ecosystems exist at certain sampling locations and what levels of biodiversity they contain. This uncertainty makes it difficult to determine what should be expected from specific sampling locations. Further, it is unclear how the movement of biotic and abiotic factors through ocean currents causes one sampling location's ecosystem to influence another. Additionally, it is uncertain whether the sampling locations can be adequately compared with each other—for example, whether sampling locations along the California coast can be compared to those further out in the ocean. Lastly, it is unclear how much influence ecosystems receive from land-based runoff of chemicals. This specifically complicates the understanding of certain relationships, as runoff chemicals can act as confounding variables in ecosystem sampling. Therefore, if further analysis were to be conducted, a metric quantifying the presence of runoff chemicals would be valuable.
 
 
 ## Impact
 
-Explain the likely impact your methods could have if adopted widely.
+
+The model and visualizations I produced could have a wide-ranging impact on environmental practices and policy. They could serve as the rallying-cry for more immediate action to mitigate the human destruction of the planet. Further, these visualizations and models could serve to educate the populace on the importance of phytoplankton to the planet and how our actions contribute to their potential collapse. 
+
+Additionally, significant change regarding climate could provide a healthier environment for these ocean ecosystems, Californians, and the world. Significant change could also bring benefical economic consequences. This could be from the prevention of the economic costs to deal with climate change. For example, not having to spend the billions of dollars necessary to repair the climate-change fueled disasters -- such as the wildfires and mudslides -- that have already stricken Southern California this year. On the other hand, promoting a green economy could produce millions of jobs and billions in economic activity (citation). 
+
+
+Ultimately, there are many avenues in which the earth's climate is being affected by humans. However, the potential destruction of phytoplankton -- one of the lungs of our planet -- will have a devastating impact on life as we know it.
 
 
